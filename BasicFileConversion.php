@@ -2,6 +2,14 @@
 
 include_once('CanIdLookup.php');
 
+
+function ConvertHex($CanId) {
+    $ValueArray = $CanIdArray[strtoupper($CanId)];
+    
+    return $CanId;
+}
+
+
 $handle = fopen("log.txt", "r");
 if ($handle) {
     while (($line = fgets($handle)) !== false) {
@@ -13,11 +21,9 @@ if ($handle) {
                 //do nothing as the values are all 0
             }else{
                     echo date('Y-m-d | h:i:suv a', $line[0]) . "$line[2] \r\n";
-                foreach($CanIdArray as $CanId){
-                    var_dump($CanId);
-                    
-                    
-                }
+                $ValueArray = $CanIdArray[strtoupper($line[2])];
+                var_dump($ValueArray);
+                
                 exit;
             }
 
