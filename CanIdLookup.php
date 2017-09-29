@@ -8,30 +8,30 @@ $CanIdArray = array(
                             "3" => array("Position" => "6,7", "Name"=> "CoolantPressure", "Units" => "kPa", "Conversion" => "x/10")
                         ),
                 "361" => array (
-                            "0,1" => array("Name"=> "FuelPressure", "Units" => "kPa", "Conversion" => "x/10"),
-                            "2,3" => array("Name"=> "OilPressure", "Units" => "kPa", "Conversion" => "x/10"),	
-                            "4,5" => array("Name"=> "EngineDemand", "Units" => "%", "Conversion" => "x/10"),
-                            "6,7" => array("Name"=> "WastegatePressure", "Units" => "kPa", "Conversion" => "x/10")
+                            "0" => array("Position" => "0,1", "Name"=> "FuelPressure", "Units" => "kPa", "Conversion" => "x/10"),
+                            "1" => array("Position" => "2,3", "Name"=> "OilPressure", "Units" => "kPa", "Conversion" => "x/10"),	
+                            "2" => array("Position" => "4,5", "Name"=> "EngineDemand", "Units" => "%", "Conversion" => "x/10"),
+                            "3" => array("Position" => "6,7", "Name"=> "WastegatePressure", "Units" => "kPa", "Conversion" => "x/10")
                         ),
                 "362" => array (
-                            "0,1" => array("Name"=> "InjectionStage1DutyCycle", "Units" => "kPa", "Conversion" => "x/10"),
-                            "2,3" => array("Name"=> "InjectionStage2DutyCycle", "Units" => "kPa", "Conversion" => "x/10"),	
-                            "4,5" => array("Name"=> "IgnitionAngleLeading", "Units" => "Degrees", "Conversion" => "x/10")
+                            "0" => array("Position" => "0,1", "Name"=> "InjectionStage1DutyCycle", "Units" => "kPa", "Conversion" => "x/10"),
+                            "1" => array("Position" => "2,3", "Name"=> "InjectionStage2DutyCycle", "Units" => "kPa", "Conversion" => "x/10"),	
+                            "2" => array("Position" => "4,5", "Name"=> "IgnitionAngleLeading", "Units" => "Degrees", "Conversion" => "x/10")
                         ),
                 "363" => array (
-                            "0,1" => array("Name"=> "WheelSlop", "Units" => "kmh", "Conversion" => "x/10"),
-                            "2,3" => array("Name"=> "WheelDiff", "Units" => "kmh", "Conversion" => "x/10")	
+                            "0" => array("Position" => "0,1", "Name"=> "WheelSlop", "Units" => "kmh", "Conversion" => "x/10"),
+                            "1" => array("Position" => "2,3", "Name"=> "WheelDiff", "Units" => "kmh", "Conversion" => "x/10")	
                         ),
                 "369" => array (
-                            "0,1" => array("Name"=> "WidebandSensor1", "Units" => "lamda", "Conversion" => "x/1000"),
-                            "2,3" => array("Name"=> "WidebandSensor2", "Units" => "lamda", "Conversion" => "x/1000"),	
-                            "4,5" => array("Name"=> "WidebandSensor3", "Units" => "lamda", "Conversion" => "x/1000"),
-                            "6,7" => array("Name"=> "WidebandSensor4", "Units" => "lamda", "Conversion" => "x/1000")
+                            "0" => array("Position" => "0,1", "Name"=> "WidebandSensor1", "Units" => "lamda", "Conversion" => "x/1000"),
+                            "1" => array("Position" => "2,3", "Name"=> "WidebandSensor2", "Units" => "lamda", "Conversion" => "x/1000"),	
+                            "2" => array("Position" => "4,5", "Name"=> "WidebandSensor3", "Units" => "lamda", "Conversion" => "x/1000"),
+                            "3" => array("Position" => "6,7", "Name"=> "WidebandSensor4", "Units" => "lamda", "Conversion" => "x/1000")
                         ),
                 "368" => array (
-                            "0,1" => array("Name"=> "TriggerSystemErrorCount", "Units" => "int", "Conversion" => "x"),
-                            "2,3" => array("Name"=> "TriggerCount", "Units" => "int", "Conversion" => "x"),	
-                            "6,7" => array("Name"=> "TriggerSyncLevel", "Units" => "int", "Conversion" => "x")
+                            "0" => array("Position" => "0,1", "Name"=> "TriggerSystemErrorCount", "Units" => "int", "Conversion" => "x"),
+                            "1" => array("Position" => "2,3", "Name"=> "TriggerCount", "Units" => "int", "Conversion" => "x"),	
+                            "2" => array("Position" => "6,7", "Name"=> "TriggerSyncLevel", "Units" => "int", "Conversion" => "x")
                         ),
                 "36A" => array (
                             "0,1" => array("Name"=> "KnockLevel", "Units" => "dB", "Conversion" => "x/100"),
