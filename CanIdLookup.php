@@ -2,7 +2,7 @@
 
 $CanIdArray = array(
                 "360" => array (
-                            "0,1" => array("Name"=> "RPM", "Units" => "RPM", "Conversion" => "x"),
+                            "0" => array("CanID" => "0,1", "Name"=> "RPM", "Units" => "RPM", "Conversion" => "x"),
                             "2,3" => array("Name"=> "ManifoldPressure", "Units" => "kPa", "Conversion" => "x/10"),	
                             "4,5" => array("Name"=> "ThrottlePosition", "Units" => "%", "Conversion" => "x/10"),
                             "6,7" => array("Name"=> "CoolantPressure", "Units" => "kPa", "Conversion" => "x/10")
