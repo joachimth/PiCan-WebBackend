@@ -15,7 +15,7 @@ $CanIdArray = array(
                         ),
                 "362" => array (
                             "0" => array("Position" => "0,1", "Name"=> "InjectionStage1DutyCycle", "Units" => "kPa", "Conversion" => "x/10"),
-                            "1" => array("Position" => "2,3", "Name"=> "InjectionStage2DutyCycle", "Units" => "kPa", "Conversion" => "x/10"),	
+                            "1" => array("Position" => "2,3", "Name"=> "InjectionStage2DutyCycle", "Units" => "kPa", "Conversion" => "x/10"),
                             "2" => array("Position" => "4,5", "Name"=> "IgnitionAngleLeading", "Units" => "Degrees", "Conversion" => "x/10")
                         ),
                 "363" => array (
@@ -34,40 +34,40 @@ $CanIdArray = array(
                             "2" => array("Position" => "6,7", "Name"=> "TriggerSyncLevel", "Units" => "int", "Conversion" => "x")
                         ),
                 "36A" => array (
-                            "0,1" => array("Name"=> "KnockLevel", "Units" => "dB", "Conversion" => "x/100"),
-                            "2,3" => array("Name"=> "KnockLevel", "Units" => "dB", "Conversion" => "x/100")	
+                            "0" => array("Position" => "0,1", "Name"=> "KnockLevel", "Units" => "dB", "Conversion" => "x/100"),
+                            "1" => array("Position" => "2,3", "Name"=> "KnockLevel", "Units" => "dB", "Conversion" => "x/100")	
                         ),
                 "36B" => array (
-                            "0,1" => array("Name"=> "BrakePressure", "Units" => "kPa", "Conversion" => "x/10"),
-                            "2,3" => array("Name"=> "NOSPressureSensor1", "Units" => "kPa", "Conversion" => "x*11/50"),	
-                            "4,5" => array("Name"=> "TurboSpeedSensor1", "Units" => "RPM", "Conversion" => "x*10"),
-                            "6,7" => array("Name"=> "LateralG", "Units" => "m/s*s", "Conversion" => "x/10")
+                            "0" => array("Position" => "0,1", "Name"=> "BrakePressure", "Units" => "kPa", "Conversion" => "x/10"),
+                            "1" => array("Position" => "2,3", "Name"=> "NOSPressureSensor1", "Units" => "kPa", "Conversion" => "x*11/50"),	
+                            "2" => array("Position" => "4,5", "Name"=> "TurboSpeedSensor1", "Units" => "RPM", "Conversion" => "x*10"),
+                            "3" => array("Position" => "6,7", "Name"=> "LateralG", "Units" => "m/s*s", "Conversion" => "x/10")
                         ),
                 "36C" => array (
-                            "0,1" => array("Name"=> "WheelSpeedFrontLeft", "Units" => "kmh", "Conversion" => "x/10"),
-                            "2,3" => array("Name"=> "WheelSpeedFrontRight", "Units" => "kmh", "Conversion" => "x/10"),	
-                            "4,5" => array("Name"=> "WheelSpeedRearLeft", "Units" => "kmh", "Conversion" => "x/10"),
-                            "6,7" => array("Name"=> "WheelSpeedRearRight", "Units" => "kmh", "Conversion" => "x/10")
+                            "0" => array("Position" => "0,1", "Name"=> "WheelSpeedFrontLeft", "Units" => "kmh", "Conversion" => "x/10"),
+                            "1" => array("Position" => "2,3", "Name"=> "WheelSpeedFrontRight", "Units" => "kmh", "Conversion" => "x/10"),	
+                            "2" => array("Position" => "4,5", "Name"=> "WheelSpeedRearLeft", "Units" => "kmh", "Conversion" => "x/10"),
+                            "3" => array("Position" => "6,7", "Name"=> "WheelSpeedRearRight", "Units" => "kmh", "Conversion" => "x/10")
                         ),
                 "36D" => array (
-                            "4,5" => array("Name"=> "ExhaustCamAngle1", "Units" => "Degrees", "Conversion" => "x/10"),
-                            "6,7" => array("Name"=> "ExhaustCamAngle2", "Units" => "Degrees", "Conversion" => "x/10")	
+                            "0" => array("Position" => "4,5", "Name"=> "ExhaustCamAngle1", "Units" => "Degrees", "Conversion" => "x/10"),
+                            "1" => array("Position" => "6,7", "Name"=> "ExhaustCamAngle2", "Units" => "Degrees", "Conversion" => "x/10")	
                         ),
                 "36E" => array (
-                            "0,1" => array("Name"=> "EngineLimitActive", "Units" => "bool", "Conversion" => "x"),
-                            "2,3" => array("Name"=> "LaunchControlIgnitionRetard", "Units" => "Degrees", "Conversion" => "x/10"),	
-                            "4,5" => array("Name"=> "LaunchControlFuelEnrich", "Units" => "%", "Conversion" => "x/10"),
-                            "6,7" => array("Name"=> "LongitudinalG", "Units" => "m/s*s", "Conversion" => "x/10")
+                            "0" => array("Position" => "0,1", "Name"=> "EngineLimitActive", "Units" => "bool", "Conversion" => "x"),
+                            "1" => array("Position" => "2,3", "Name"=> "LaunchControlIgnitionRetard", "Units" => "Degrees", "Conversion" => "x/10"),	
+                            "2" => array("Position" => "4,5", "Name"=> "LaunchControlFuelEnrich", "Units" => "%", "Conversion" => "x/10"),
+                            "3" => array("Position" => "6,7", "Name"=> "LongitudinalG", "Units" => "m/s*s", "Conversion" => "x/10")
                         ),    
                 "36F" => array (
-                            "0,1" => array("Name"=> "GenericOutputDutyCycle1", "Units" => "%", "Conversion" => "x/10"),
-                            "2,3" => array("Name"=> "BoostControlOutput", "Units" => "%", "Conversion" => "x/10")	
+                            "0" => array("Position" => "0,1", "Name"=> "GenericOutputDutyCycle1", "Units" => "%", "Conversion" => "x/10"),
+                            "1" => array("Position" => "2,3", "Name"=> "BoostControlOutput", "Units" => "%", "Conversion" => "x/10")	
                         ),
                 "370" => array (
-                            "0,1" => array("Name"=> "VehicleSpeed", "Units" => "kmh", "Conversion" => "x/10"),
-                            "2,3" => array("Name"=> "gear", "Units" => "int", "Conversion" => "x"),	
-                            "4,5" => array("Name"=> "IntakeCamAngle1", "Units" => "Degrees", "Conversion" => "x/10"),
-                            "6,7" => array("Name"=> "IntakeCamAngle2", "Units" => "Degrees", "Conversion" => "x/10")
+                            "0" => array("Position" => "0,1", "Name"=> "VehicleSpeed", "Units" => "kmh", "Conversion" => "x/10"),
+                            "1" => array("Position" => "2,3", "Name"=> "gear", "Units" => "int", "Conversion" => "x"),	
+                            "2" => array("Position" => "4,5", "Name"=> "IntakeCamAngle1", "Units" => "Degrees", "Conversion" => "x/10"),
+                            "3" => array("Position" => "6,7", "Name"=> "IntakeCamAngle2", "Units" => "Degrees", "Conversion" => "x/10")
                         ), 
                 "371" => array (
                             "0,1" => array("Name"=> "FuelFlow", "Units" => "cc/min", "Conversion" => "x"),
