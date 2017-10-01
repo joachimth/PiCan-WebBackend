@@ -97,27 +97,23 @@ function ConvertHex($CanId, $array) {
                 }
                 break;
             case 3:
-                foreach($RunningArray as $RunningKey => $RunningValue){
-                    
+                foreach($RunningArray as $RunningKey => $RunningValue){                    
                     if ($CanValue[Name] == $RunningKey) {
                         //in arrray: update
                         return "in arrray: update";
                     }else{
                         //not in array: add
                         $ConvertedHex = hexdec($array[$formula[1]]);
-                        $entry = array($CanValue[Name] => array("Value" => $ConvertedHex, "Name"=> $Value[Name], "Units" => $Value[Units], "Conversion" => $Value[Conversion], "RawHex" => $array[$formula[1]]));
-
-                        array_push($RunningArray, $entry);
+                        $entry = array($CanValue[Name] => array("Value" => $ConvertedHex, "Name"=> $CanValue[Name], "Units" => $CanValue[Units], "Conversion" => $CanValue[Conversion], "RawHex" => $array[$formula[1]]));
+                        $RunningArray = array_merge($RunningArray, $entry);
                     }
                 }
                 if (empty($RunningArray)) {
                      // list is empty.
                     $ConvertedHex = hexdec($array[$formula[1]]);
                     $entry = array($CanValue[Name] => array("Value" => $ConvertedHex, "Name"=> $Value[Name], "Units" => $Value[Units], "Conversion" => $Value[Conversion], "RawHex" => $array[$formula[1]]));
-
-                    array_push($RunningArray, $entry);
-                }
-                return $entry;
+                    $RunningArray = array_merge($RunningArray, $entry);
+                }                
                 break;
             default:
                 return "error";
@@ -138,8 +134,9 @@ if ($handle) {
                 //do nothing as the values are all 0
             }else{
                 echo date('Y-m-d | h:i:suv a', $line[0]) . " $line[2] \r\n";
-                ConvertHex($line[2], $line);
-                
+                $return = ConvertHex($line[2], $line);
+                var_dump($return);
+                //exit;
             }
 
     }
