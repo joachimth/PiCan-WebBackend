@@ -2,7 +2,7 @@
 error_reporting(0);
 
 require_once('includes/CanIdLookup.php');
-require_once "includes/eos-1.0.0/eos.class.php";
+require_once('includes/Field_calculate.php');
 
 
 $RunningArray = array();
@@ -97,9 +97,9 @@ function ConvertHex($CanId, $array) {
                         
                         
                         $equation = str_replace("x", $ConvertedHex, $CanValue[Conversion]);
-                        $eq = new eqEOS();
-                        $result = $eq->solveIF($equation);
-                        
+                        $Cal = new Field_calculate();
+                        $result = $Cal->calculate($equation); 
+
                         
                         $entry = array($CanValue[Name] => array("Value" => $result, "Name"=> $CanValue[Name], "Units" => $CanValue[Units], "Conversion" => $CanValue[Conversion], "RawHex" => $HexValue, "DateTime" => $array[0]));
                         if($ConvertedHex != 0){
@@ -112,8 +112,8 @@ function ConvertHex($CanId, $array) {
                     $ConvertedHex = hexdec($array[$formula[1]]);
                     
                     $equation = str_replace("x", $ConvertedHex, $CanValue[Conversion]);
-                    $eq = new eqEOS();
-                    $result = $eq->solveIF($equation);
+                    $Cal = new Field_calculate();
+                    $result = $Cal->calculate($equation); 
                     
                     $entry = array($CanValue[Name] => array("Value" => $result, "Name"=> $Value[Name], "Units" => $Value[Units], "Conversion" => $Value[Conversion], "RawHex" => $HexValue, "DateTime" => $array[0]));
                         if($ConvertedHex != 0){
@@ -133,8 +133,8 @@ function ConvertHex($CanId, $array) {
                         $ConvertedHex = hexdec($hex);
                         
                         $equation = str_replace("x", $ConvertedHex, $CanValue[Conversion]);
-                        $eq = new eqEOS();
-                        $result = $eq->solveIF($equation);   
+                        $Cal = new Field_calculate();
+                        $result = $Cal->calculate($equation);   
                         
                         $entry = array($CanValue[Name] => array("Value" => $result, "Name"=> $CanValue[Name], "Units" => $CanValue[Units], "Conversion" => $CanValue[Conversion], "RawHex" => $hex, "DateTime" => $array[0]));
                         if($ConvertedHex != 0){
@@ -148,8 +148,8 @@ function ConvertHex($CanId, $array) {
                     $ConvertedHex = hexdec($hex);
                     
                     $equation = str_replace("x", $ConvertedHex, $CanValue[Conversion]);
-                    $eq = new eqEOS();
-                    $result = $eq->solveIF($equation);  
+                    $Cal = new Field_calculate();
+                    $result = $Cal->calculate($equation); 
 
                     $entry = array($CanValue[Name] => array("Value" => $result, "Name"=> $Value[Name], "Units" => $Value[Units], "Conversion" => $Value[Conversion], "RawHex" => $hex, "DateTime" => $array[0]));
                         if($ConvertedHex != 0){
@@ -168,8 +168,8 @@ function ConvertHex($CanId, $array) {
                         $ConvertedHex = hexdec($hex);
                         
                         $equation = str_replace("x", $ConvertedHex, $CanValue[Conversion]);
-                        $eq = new eqEOS();
-                        $result = $eq->solveIF($equation);                          
+                        $Cal = new Field_calculate();
+                        $result = $Cal->calculate($equation);                         
                         
                         $entry = array($CanValue[Name] => array("Value" => $result, "Name"=> $CanValue[Name], "Units" => $CanValue[Units], "Conversion" => $CanValue[Conversion], "RawHex" => $hex, "DateTime" => $array[0]));
                         if($ConvertedHex != 0){
@@ -183,8 +183,8 @@ function ConvertHex($CanId, $array) {
                     $ConvertedHex = hexdec($hex);
                     
                     $equation = str_replace("x", $ConvertedHex, $CanValue[Conversion]);
-                    $eq = new eqEOS();
-                    $result = $eq->solveIF($equation);    
+                    $Cal = new Field_calculate();
+                    $result = $Cal->calculate($equation);  
                     
                     $entry = array($CanValue[Name] => array("Value" => $result, "Name"=> $Value[Name], "Units" => $Value[Units], "Conversion" => $Value[Conversion], "RawHex" => $hex, "DateTime" => $array[0]));
                         if($ConvertedHex != 0){
@@ -210,6 +210,9 @@ if ($handle) {
 
         $DateTime = explode('.', $line[0]);
 
+        
+        //Write to file every 1/10th of a second:
+        
         if(is_null($Tenth)){
             $Tenth = $DateTime[1][0];
         }
@@ -218,7 +221,7 @@ if ($handle) {
             //do nothing as its the same tenth of a second
         }else{
             //do something its not the same tenth of a second (this assumes is the next tenth of a second)
-            var_dump($RunningArray[RPM]);
+            //var_dump($RunningArray[RPM]);
             $RunningArray = array();
             $Tenth = null;
         }
@@ -238,6 +241,6 @@ if ($handle) {
     // error opening the file.
 } 
 
-//var_dump($RunningArray);
+var_dump($RunningArray);
 //exit;
 ?>
