@@ -1,10 +1,12 @@
 <?php
 error_reporting(0);
 
-include_once('CanIdLookup.php');
+require_once('includes/CanIdLookup.php');
+require_once "includes/eos-1.0.0/eos.class.php";
+
 
 $RunningArray = array();
-
+$Tenth = null;
 
     
 function HexPosition($Number){
@@ -92,7 +94,14 @@ function ConvertHex($CanId, $array) {
                             $HexValue .= $array[$HexValueKey];
                         }
                         $ConvertedHex = hexdec($HexValue);
-                        $entry = array($CanValue[Name] => array("Value" => $ConvertedHex, "Name"=> $CanValue[Name], "Units" => $CanValue[Units], "Conversion" => $CanValue[Conversion], "RawHex" => $array[$formula[1]], "DateTime" => $array[0]));
+                        
+                        
+                        $equation = str_replace("x", $ConvertedHex, $CanValue[Conversion]);
+                        $eq = new eqEOS();
+                        $result = $eq->solveIF($equation);
+                        
+                        
+                        $entry = array($CanValue[Name] => array("Value" => $result, "Name"=> $CanValue[Name], "Units" => $CanValue[Units], "Conversion" => $CanValue[Conversion], "RawHex" => $HexValue, "DateTime" => $array[0]));
                         if($ConvertedHex != 0){
                             $RunningArray = array_merge($RunningArray, $entry);
                         }
@@ -101,7 +110,12 @@ function ConvertHex($CanId, $array) {
                 if (empty($RunningArray)) {
                      // list is empty.
                     $ConvertedHex = hexdec($array[$formula[1]]);
-                    $entry = array($CanValue[Name] => array("Value" => $ConvertedHex, "Name"=> $Value[Name], "Units" => $Value[Units], "Conversion" => $Value[Conversion], "RawHex" => $array[$formula[1]], "DateTime" => $array[0]));
+                    
+                    $equation = str_replace("x", $ConvertedHex, $CanValue[Conversion]);
+                    $eq = new eqEOS();
+                    $result = $eq->solveIF($equation);
+                    
+                    $entry = array($CanValue[Name] => array("Value" => $result, "Name"=> $Value[Name], "Units" => $Value[Units], "Conversion" => $Value[Conversion], "RawHex" => $HexValue, "DateTime" => $array[0]));
                         if($ConvertedHex != 0){
                             $RunningArray = array_merge($RunningArray, $entry);
                         }
@@ -115,8 +129,14 @@ function ConvertHex($CanId, $array) {
                         return "in arrray: update";
                     }else{
                         //not in array: add
-                        $ConvertedHex = hexdec($array[$formula[1]]);
-                        $entry = array($CanValue[Name] => array("Value" => $ConvertedHex, "Name"=> $CanValue[Name], "Units" => $CanValue[Units], "Conversion" => $CanValue[Conversion], "RawHex" => $formula[1], "DateTime" => $array[0]));
+                        $hex = $array[$formula[1][0]];
+                        $ConvertedHex = hexdec($hex);
+                        
+                        $equation = str_replace("x", $ConvertedHex, $CanValue[Conversion]);
+                        $eq = new eqEOS();
+                        $result = $eq->solveIF($equation);   
+                        
+                        $entry = array($CanValue[Name] => array("Value" => $result, "Name"=> $CanValue[Name], "Units" => $CanValue[Units], "Conversion" => $CanValue[Conversion], "RawHex" => $hex, "DateTime" => $array[0]));
                         if($ConvertedHex != 0){
                             $RunningArray = array_merge($RunningArray, $entry);
                         }
@@ -124,8 +144,14 @@ function ConvertHex($CanId, $array) {
                 }
                 if (empty($RunningArray)) {
                      // list is empty.
-                    $ConvertedHex = hexdec($array[$formula[1]]);
-                    $entry = array($CanValue[Name] => array("Value" => $ConvertedHex, "Name"=> $Value[Name], "Units" => $Value[Units], "Conversion" => $Value[Conversion], "RawHex" => $formula[1], "DateTime" => $array[0]));
+                    $hex = $array[$formula[1][0]];
+                    $ConvertedHex = hexdec($hex);
+                    
+                    $equation = str_replace("x", $ConvertedHex, $CanValue[Conversion]);
+                    $eq = new eqEOS();
+                    $result = $eq->solveIF($equation);  
+
+                    $entry = array($CanValue[Name] => array("Value" => $result, "Name"=> $Value[Name], "Units" => $Value[Units], "Conversion" => $Value[Conversion], "RawHex" => $hex, "DateTime" => $array[0]));
                         if($ConvertedHex != 0){
                             $RunningArray = array_merge($RunningArray, $entry);
                         }
@@ -140,7 +166,12 @@ function ConvertHex($CanId, $array) {
                         //not in array: add
                         $hex = $array[$formula[1]];
                         $ConvertedHex = hexdec($hex);
-                        $entry = array($CanValue[Name] => array("Value" => $ConvertedHex, "Name"=> $CanValue[Name], "Units" => $CanValue[Units], "Conversion" => $CanValue[Conversion], "RawHex" => $hex, "DateTime" => $array[0]));
+                        
+                        $equation = str_replace("x", $ConvertedHex, $CanValue[Conversion]);
+                        $eq = new eqEOS();
+                        $result = $eq->solveIF($equation);                          
+                        
+                        $entry = array($CanValue[Name] => array("Value" => $result, "Name"=> $CanValue[Name], "Units" => $CanValue[Units], "Conversion" => $CanValue[Conversion], "RawHex" => $hex, "DateTime" => $array[0]));
                         if($ConvertedHex != 0){
                             $RunningArray = array_merge($RunningArray, $entry);
                         }
@@ -150,7 +181,12 @@ function ConvertHex($CanId, $array) {
                      // list is empty.
                     $hex = $array[$formula[1]];
                     $ConvertedHex = hexdec($hex);
-                    $entry = array($CanValue[Name] => array("Value" => $ConvertedHex, "Name"=> $Value[Name], "Units" => $Value[Units], "Conversion" => $Value[Conversion], "RawHex" => $hex, "DateTime" => $array[0]));
+                    
+                    $equation = str_replace("x", $ConvertedHex, $CanValue[Conversion]);
+                    $eq = new eqEOS();
+                    $result = $eq->solveIF($equation);    
+                    
+                    $entry = array($CanValue[Name] => array("Value" => $result, "Name"=> $Value[Name], "Units" => $Value[Units], "Conversion" => $Value[Conversion], "RawHex" => $hex, "DateTime" => $array[0]));
                         if($ConvertedHex != 0){
                             $RunningArray = array_merge($RunningArray, $entry);
                         }
@@ -172,12 +208,6 @@ if ($handle) {
         $sum = (boolean) ($line[4] . $line[5] . $line[6] . $line[7] . $line[8] . $line[9] . $line[10] . $line[11]);
         //echo $sum . "\n\r";
 
-
-        //todo
-        //export $RunningArray every 10th of a second
-
-        
-
         $DateTime = explode('.', $line[0]);
 
         if(is_null($Tenth)){
@@ -198,6 +228,7 @@ if ($handle) {
         }else{
             //echo date('Y-m-d | h:i:s', $DateTime[0]) . ".$DateTime[1] $line[2] \r\n";
             $return = ConvertHex($line[2], $line);
+            //var_dump($return);
         }
 
     }
