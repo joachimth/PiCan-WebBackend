@@ -71,38 +71,59 @@ function Position($PositionValue){
 
 function ConvertHex($CanId, $array) {
     global $CanIdArray, $RunningArray;
-    $ValueArray = $CanIdArray[strtoupper($CanId)];
+    $CanValueArray = $CanIdArray[strtoupper($CanId)];
     
-    foreach($ValueArray as $key => $Value){
+    foreach($CanValueArray as $CanKey => $CanValue){
         $formula = Position($Value[Position]);
-        if($formula[0] == 1){
-            //this is a comma value eg 1,2
-            if (array_key_exists($Value[Name], $RunningArray)) {
-                //in arrray: update
-            }else{
-                //not in array: add
-            }
-        }elseif($formula[0] == 2){
-            //this one contains :
-            if (array_key_exists($Value[Name], $RunningArray)) {
-                //in arrray: update
-            }else{
-                //not in array: add
-            }
-        }elseif($formula[0] == 3){
-            //this is a straight value
-            if (array_key_exists($Value[Name], $RunningArray)) {
-                //in arrray: update
-            }else{
-                //not in array: add
-            }
-            
-        }
         
-    }
-    
-    
-    return $formula;
+        
+        switch ($formula[0]) {
+            case 1:
+                //this is a comma value eg 1,2
+                if (array_key_exists($CanValue[Name], $RunningArray)) {
+                    //in arrray: update
+                }else{
+                    //not in array: add
+                    //array_push($RunningArray, $entry);
+                }
+                break;
+            case 2:
+                //this one contains :
+                if (array_key_exists($CanValue[Name], $RunningArray)) {
+                    //in arrray: update
+                }else{
+                    //not in array: add
+                    //array_push($RunningArray, $entry);
+                }
+                break;
+            case 3:
+                foreach($RunningArray as $RunningKey => $RunningValue){
+                    
+                    if ($CanValue[Name] == $RunningKey) {
+                        //in arrray: update
+                        return "in arrray: update";
+                    }else{
+                        //not in array: add
+                        $ConvertedHex = hexdec($array[$formula[1]]);
+                        $entry = array($CanValue[Name] => array("Value" => $ConvertedHex, "Name"=> $Value[Name], "Units" => $Value[Units], "Conversion" => $Value[Conversion], "RawHex" => $array[$formula[1]]));
+
+                        array_push($RunningArray, $entry);
+                    }
+                }
+                if (empty($RunningArray)) {
+                     // list is empty.
+                    $ConvertedHex = hexdec($array[$formula[1]]);
+                    $entry = array($CanValue[Name] => array("Value" => $ConvertedHex, "Name"=> $Value[Name], "Units" => $Value[Units], "Conversion" => $Value[Conversion], "RawHex" => $array[$formula[1]]));
+
+                    array_push($RunningArray, $entry);
+                }
+                return $entry;
+                break;
+            default:
+                return "error";
+        }//close switch     
+    }//close foreach
+    return $RunningArray;
 }
 
 
@@ -116,12 +137,9 @@ if ($handle) {
             if(!$sum){
                 //do nothing as the values are all 0
             }else{
-                    echo date('Y-m-d | h:i:suv a', $line[0]) . " $line[2] \r\n";
-                $ValueArray = ConvertHex($line[2], $line);
+                echo date('Y-m-d | h:i:suv a', $line[0]) . " $line[2] \r\n";
+                ConvertHex($line[2], $line);
                 
-                var_dump($ValueArray);
-                
-                exit;
             }
 
     }
@@ -131,5 +149,6 @@ if ($handle) {
     // error opening the file.
 } 
 
-
+                var_dump($RunningArray);
+                //exit;
 ?>
