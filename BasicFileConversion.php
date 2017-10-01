@@ -93,14 +93,18 @@ function ConvertHex($CanId, $array) {
                         }
                         $ConvertedHex = hexdec($HexValue);
                         $entry = array($CanValue[Name] => array("Value" => $ConvertedHex, "Name"=> $CanValue[Name], "Units" => $CanValue[Units], "Conversion" => $CanValue[Conversion], "RawHex" => $array[$formula[1]], "DateTime" => $array[0]));
-                        $RunningArray = array_merge($RunningArray, $entry);
+                        if($ConvertedHex != 0){
+                            $RunningArray = array_merge($RunningArray, $entry);
+                        }
                     }
                 }
                 if (empty($RunningArray)) {
                      // list is empty.
                     $ConvertedHex = hexdec($array[$formula[1]]);
                     $entry = array($CanValue[Name] => array("Value" => $ConvertedHex, "Name"=> $Value[Name], "Units" => $Value[Units], "Conversion" => $Value[Conversion], "RawHex" => $array[$formula[1]], "DateTime" => $array[0]));
-                    $RunningArray = array_merge($RunningArray, $entry);
+                        if($ConvertedHex != 0){
+                            $RunningArray = array_merge($RunningArray, $entry);
+                        }
                 } 
                 break;
             case 2:
@@ -112,15 +116,19 @@ function ConvertHex($CanId, $array) {
                     }else{
                         //not in array: add
                         $ConvertedHex = hexdec($array[$formula[1]]);
-                        $entry = array($CanValue[Name] => array("Value" => $ConvertedHex, "Name"=> $CanValue[Name], "Units" => $CanValue[Units], "Conversion" => $CanValue[Conversion], "RawHex" => $array[$formula[1]], "DateTime" => $array[0]));
-                        $RunningArray = array_merge($RunningArray, $entry);
+                        $entry = array($CanValue[Name] => array("Value" => $ConvertedHex, "Name"=> $CanValue[Name], "Units" => $CanValue[Units], "Conversion" => $CanValue[Conversion], "RawHex" => $formula[1], "DateTime" => $array[0]));
+                        if($ConvertedHex != 0){
+                            $RunningArray = array_merge($RunningArray, $entry);
+                        }
                     }
                 }
                 if (empty($RunningArray)) {
                      // list is empty.
                     $ConvertedHex = hexdec($array[$formula[1]]);
-                    $entry = array($CanValue[Name] => array("Value" => $ConvertedHex, "Name"=> $Value[Name], "Units" => $Value[Units], "Conversion" => $Value[Conversion], "RawHex" => $array[$formula[1]], "DateTime" => $array[0]));
-                    $RunningArray = array_merge($RunningArray, $entry);
+                    $entry = array($CanValue[Name] => array("Value" => $ConvertedHex, "Name"=> $Value[Name], "Units" => $Value[Units], "Conversion" => $Value[Conversion], "RawHex" => $formula[1], "DateTime" => $array[0]));
+                        if($ConvertedHex != 0){
+                            $RunningArray = array_merge($RunningArray, $entry);
+                        }
                 } 
                 break;
             case 3:
@@ -130,16 +138,22 @@ function ConvertHex($CanId, $array) {
                         return "in arrray: update";
                     }else{
                         //not in array: add
-                        $ConvertedHex = hexdec($array[$formula[1]]);
-                        $entry = array($CanValue[Name] => array("Value" => $ConvertedHex, "Name"=> $CanValue[Name], "Units" => $CanValue[Units], "Conversion" => $CanValue[Conversion], "RawHex" => $array[$formula[1]], "DateTime" => $array[0]));
-                        $RunningArray = array_merge($RunningArray, $entry);
+                        $hex = $array[$formula[1]];
+                        $ConvertedHex = hexdec($hex);
+                        $entry = array($CanValue[Name] => array("Value" => $ConvertedHex, "Name"=> $CanValue[Name], "Units" => $CanValue[Units], "Conversion" => $CanValue[Conversion], "RawHex" => $hex, "DateTime" => $array[0]));
+                        if($ConvertedHex != 0){
+                            $RunningArray = array_merge($RunningArray, $entry);
+                        }
                     }
                 }
                 if (empty($RunningArray)) {
                      // list is empty.
-                    $ConvertedHex = hexdec($array[$formula[1]]);
-                    $entry = array($CanValue[Name] => array("Value" => $ConvertedHex, "Name"=> $Value[Name], "Units" => $Value[Units], "Conversion" => $Value[Conversion], "RawHex" => $array[$formula[1]], "DateTime" => $array[0]));
-                    $RunningArray = array_merge($RunningArray, $entry);
+                    $hex = $array[$formula[1]];
+                    $ConvertedHex = hexdec($hex);
+                    $entry = array($CanValue[Name] => array("Value" => $ConvertedHex, "Name"=> $Value[Name], "Units" => $Value[Units], "Conversion" => $Value[Conversion], "RawHex" => $hex, "DateTime" => $array[0]));
+                        if($ConvertedHex != 0){
+                            $RunningArray = array_merge($RunningArray, $entry);
+                        }
                 }                
                 break;
             default:
@@ -153,17 +167,38 @@ function ConvertHex($CanId, $array) {
 $handle = fopen("log.txt", "r");
 if ($handle) {
     while (($line = fgets($handle)) !== false) {
-            $line = explode(" ", $line);
+        $line = explode(" ", $line);
 
-            $sum = $line[4] . $line[5] . $line[6] . $line[7] . $line[8] . $line[9] . $line[10] . $line[11];
-            //echo $sum . "\n\r";
+        $sum = (boolean) ($line[4] . $line[5] . $line[6] . $line[7] . $line[8] . $line[9] . $line[10] . $line[11]);
+        //echo $sum . "\n\r";
+
+
+        //todo
+        //export $RunningArray every 10th of a second
+
         
-            if(!$sum){
-                //do nothing as the values are all 0
-            }else{
-                //echo date('Y-m-d | h:i:suv a', $line[0]) . " $line[2] \r\n";
-                $return = ConvertHex($line[2], $line);
-            }
+
+        $DateTime = explode('.', $line[0]);
+
+        if(is_null($Tenth)){
+            $Tenth = $DateTime[1][0];
+        }
+
+        if($Tenth == $DateTime[1][0]){
+            //do nothing as its the same tenth of a second
+        }else{
+            //do something its not the same tenth of a second (this assumes is the next tenth of a second)
+            var_dump($RunningArray[RPM]);
+            $RunningArray = array();
+            $Tenth = null;
+        }
+
+        if(!$sum){
+            //do nothing as the values are all 0
+        }else{
+            //echo date('Y-m-d | h:i:s', $DateTime[0]) . ".$DateTime[1] $line[2] \r\n";
+            $return = ConvertHex($line[2], $line);
+        }
 
     }
 
@@ -172,6 +207,6 @@ if ($handle) {
     // error opening the file.
 } 
 
-var_dump($RunningArray[CheckEngineLight]);
+//var_dump($RunningArray);
 //exit;
 ?>
