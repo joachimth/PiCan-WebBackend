@@ -2,6 +2,9 @@
 
 include_once('CanIdLookup.php');
 
+$RunningArray = array();
+
+
     
 function HexPosition($Number){
     switch ($Number) {
@@ -32,11 +35,11 @@ function HexPosition($Number){
         default:
             return "error";
     }
-    
 }
 
 function Position($PositionValue){
-    
+    //this returns the correct array id's and formats the return values to ease the conversion of data.
+
     if (strpos($PositionValue, ',') !== false) {
         $returnArray = array();
         $numbers = explode(',',$PositionValue);
@@ -45,14 +48,21 @@ function Position($PositionValue){
             array_push($returnArray, $Number);
         }
         
-        return $returnArray;
+        $Return = array(1,$returnArray);
+        return $Return;
         
     }elseif(strpos($PositionValue, ':') !== false){
         $returnArray = array();
         $numbers = explode(':',$PositionValue);
         $Number = HexPosition($numbers[0]);
         
-        return $Number;        
+        $Return = array(2,$numbers[1]);
+        return $Return;
+    }else{
+        $Number = HexPosition($numbers[0]);
+        
+        $Return = array(3,$Number);
+        return $Return;
     }
     
     return 0;
@@ -60,13 +70,34 @@ function Position($PositionValue){
 }
 
 function ConvertHex($CanId, $array) {
-    global $CanIdArray;
-    
-    
+    global $CanIdArray, $RunningArray;
     $ValueArray = $CanIdArray[strtoupper($CanId)];
     
-    foreach($ValueArray as $Value){
+    foreach($ValueArray as $key => $Value){
         $formula = Position($Value[Position]);
+        if($formula[0] == 1){
+            //this is a comma value eg 1,2
+            if (array_key_exists($Value[Name], $RunningArray)) {
+                //in arrray: update
+            }else{
+                //not in array: add
+            }
+        }elseif($formula[0] == 2){
+            //this one contains :
+            if (array_key_exists($Value[Name], $RunningArray)) {
+                //in arrray: update
+            }else{
+                //not in array: add
+            }
+        }elseif($formula[0] == 3){
+            //this is a straight value
+            if (array_key_exists($Value[Name], $RunningArray)) {
+                //in arrray: update
+            }else{
+                //not in array: add
+            }
+            
+        }
         
     }
     
@@ -85,7 +116,7 @@ if ($handle) {
             if(!$sum){
                 //do nothing as the values are all 0
             }else{
-                    echo date('Y-m-d | h:i:suv a', $line[0]) . "$line[2] \r\n";
+                    echo date('Y-m-d | h:i:suv a', $line[0]) . " $line[2] \r\n";
                 $ValueArray = ConvertHex($line[2], $line);
                 
                 var_dump($ValueArray);
