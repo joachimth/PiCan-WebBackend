@@ -247,7 +247,6 @@ if ($handle) {
                      echo "Cannot open file ($OutputFile)";
                      exit;
                 }
-
                 // Write $somecontent to our opened file.
                 foreach($RunningArray as $TenthOutput){
                     $WriteString = $TenthOutput[Value] ." ". $TenthOutput[Units] . " " . $TenthOutput[Name] . " , "; 
@@ -255,9 +254,10 @@ if ($handle) {
                         echo "Cannot write to file ($OutputFile)";
                     }
                 }//close foreach
-                
+                if (fwrite($TenthHandle, "\n") === FALSE) {
+                    echo "Cannot write to file ($OutputFile)";
+                }
                 fclose($TenthHandle);
-
             } else {
                 echo "The file $OutputFile is not writable";
             }
@@ -285,6 +285,6 @@ if ($handle) {
     // error opening the file.
 } 
 
-var_dump($RunningArray);
+//var_dump($RunningArray);
 //exit;
 ?>
