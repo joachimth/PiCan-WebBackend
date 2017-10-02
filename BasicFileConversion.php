@@ -7,7 +7,7 @@ require_once('includes/Field_calculate.php');
 
 $RunningArray = array();
 $Tenth = null;
-
+$LogFile = "log.txt";
     
 function HexPosition($Number){
     switch ($Number) {
@@ -200,7 +200,26 @@ function ConvertHex($CanId, $array) {
 }
 
 
-$handle = fopen("log.txt", "r");
+
+
+
+
+$filename = 'test.txt';
+$somecontent = "Add this to the file\n";
+
+
+//get the first line of the log file, so we can name the file with the correct start time
+$f = fopen($LogFile, 'r');
+$line = fgets($f);
+fclose($f);
+$line = explode(' ', $line);
+$line = explode('.', $line[0]);
+$OutputFile = date('YmdHis', $line[0]) . ".txt";
+touch($OutputFile);
+
+
+//open log file and iterate over it
+$handle = fopen($LogFile, "r");
 if ($handle) {
     while (($line = fgets($handle)) !== false) {
         $line = explode(" ", $line);
@@ -221,10 +240,35 @@ if ($handle) {
             //do nothing as its the same tenth of a second
         }else{
             //do something its not the same tenth of a second (this assumes is the next tenth of a second)
-            //var_dump($RunningArray[RPM]);
+            
+            if (is_writable($OutputFile)) {
+                //append to the outputfile                
+                if (!$TenthHandle = fopen($OutputFile, 'a')) {
+                     echo "Cannot open file ($OutputFile)";
+                     exit;
+                }
+
+                // Write $somecontent to our opened file.
+                foreach($RunningArray as $TenthOutput){
+                    $WriteString = $TenthOutput[Value] ." ". $TenthOutput[Units] . " " . $TenthOutput[Name] . " , "; 
+                    if (fwrite($TenthHandle, $WriteString) === FALSE) {
+                        echo "Cannot write to file ($OutputFile)";
+                    }
+                }//close foreach
+                
+                fclose($TenthHandle);
+
+            } else {
+                echo "The file $OutputFile is not writable";
+            }
+
+            //clear the $RunningArray and the $Tenth counter
             $RunningArray = array();
             $Tenth = null;
-        }
+            
+        }//close else            
+            
+
 
         if(!$sum){
             //do nothing as the values are all 0
