@@ -1,6 +1,7 @@
 <?php
 error_reporting(0);
 
+
 require_once('includes/CanIdLookup.php');
 require_once('includes/Field_calculate.php');
 
@@ -8,7 +9,8 @@ require_once('includes/Field_calculate.php');
 $RunningArray = array();
 $Tenth = null;
 $LogFile = "log.txt";
-    
+
+
 function HexPosition($Number){
     switch ($Number) {
         case 0:
@@ -95,12 +97,10 @@ function ConvertHex($CanId, $array) {
                         }
                         $ConvertedHex = hexdec($HexValue);
                         
-                        
                         $equation = str_replace("x", $ConvertedHex, $CanValue[Conversion]);
                         $Cal = new Field_calculate();
                         $result = $Cal->calculate($equation); 
 
-                        
                         $entry = array($CanValue[Name] => array("Value" => $result, "Name"=> $CanValue[Name], "Units" => $CanValue[Units], "Conversion" => $CanValue[Conversion], "RawHex" => $HexValue, "DateTime" => $array[0]));
                         if($ConvertedHex != 0){
                             $RunningArray = array_merge($RunningArray, $entry);
@@ -130,7 +130,10 @@ function ConvertHex($CanId, $array) {
                     }else{
                         //not in array: add
                         $hex = $array[$formula[1][0]];
-                        $ConvertedHex = hexdec($hex);
+                        //$ConvertedHex = hexdec($hex);
+                        $BinaryPosition = $formula[1][1];
+                        $binary = base_convert($hex, 16, 2);
+                        $ConvertedHex = $binary[$BinaryPosition];
                         
                         $equation = str_replace("x", $ConvertedHex, $CanValue[Conversion]);
                         $Cal = new Field_calculate();
@@ -158,6 +161,7 @@ function ConvertHex($CanId, $array) {
                 } 
                 break;
             case 3:
+                //this one is just a single byte
                 foreach($RunningArray as $RunningKey => $RunningValue){                    
                     if ($CanValue[Name] == $RunningKey) {
                         //in arrray: update
@@ -224,11 +228,7 @@ if ($handle) {
     while (($line = fgets($handle)) !== false) {
         $line = explode(" ", $line);
 
-        $sum = (boolean) ($line[4] . $line[5] . $line[6] . $line[7] . $line[8] . $line[9] . $line[10] . $line[11]);
-        //echo $sum . "\n\r";
-
         $DateTime = explode('.', $line[0]);
-
         
         //Write to file every 1/10th of a second:
         
@@ -247,8 +247,23 @@ if ($handle) {
                      echo "Cannot open file ($OutputFile)";
                      exit;
                 }
-                // Write $somecontent to our opened file.
+                // Write content to our opened file.
+                
+                //order array by Name
+                foreach($RunningArray as $key => $value) {
+                    $columns = null;
+                    foreach ($value as $index => $element) {
+                        $columns[] = $element['Name'];
+                    }
+                    $temp = $value;
+                    array_multisort($columns, SORT_ASC, $temp);
+                    $sorted_values[$key] = $temp;
+                }
+                
+                $RunningArray = $sorted_values;
+                
                 foreach($RunningArray as $TenthOutput){
+                    var_dump($TenthOutput);
                     $WriteString = $TenthOutput[Value] ." ". $TenthOutput[Units] . " " . $TenthOutput[Name] . " , "; 
                     if (fwrite($TenthHandle, $WriteString) === FALSE) {
                         echo "Cannot write to file ($OutputFile)";
@@ -269,13 +284,13 @@ if ($handle) {
         }//close else            
             
 
+        $sum = (boolean) ($line[4] . $line[5] . $line[6] . $line[7] . $line[8] . $line[9] . $line[10] . $line[11]);
 
         if(!$sum){
             //do nothing as the values are all 0
         }else{
-            //echo date('Y-m-d | h:i:s', $DateTime[0]) . ".$DateTime[1] $line[2] \r\n";
+            //call ConvertHex as there is data in the row
             $return = ConvertHex($line[2], $line);
-            //var_dump($return);
         }
 
     }
