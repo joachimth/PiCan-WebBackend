@@ -97,11 +97,11 @@ function ConvertHex($CanId, $array) {
                         }
                         $ConvertedHex = hexdec($HexValue);
                         
-                        $equation = str_replace("x", $ConvertedHex, $CanValue[Conversion]);
+                        $equation = str_replace("x", $ConvertedHex, $CanValue['Conversion']);
                         $Cal = new Field_calculate();
                         $result = $Cal->calculate($equation); 
 
-                        $entry = array($CanValue[Name] => array("Value" => $result, "Name"=> $CanValue[Name], "Units" => $CanValue[Units], "Conversion" => $CanValue[Conversion], "RawHex" => $HexValue, "DateTime" => $array[0]));
+                        $entry = array($CanValue['Name'] => array("Value" => $result, "Name"=> $CanValue[Name], "Units" => $CanValue[Units], "Conversion" => $CanValue[Conversion], "RawHex" => $HexValue, "DateTime" => $array[0]));
                         if($ConvertedHex != 0){
                             $RunningArray = array_merge($RunningArray, $entry);
                         }
@@ -115,7 +115,7 @@ function ConvertHex($CanId, $array) {
                     $Cal = new Field_calculate();
                     $result = $Cal->calculate($equation); 
                     
-                    $entry = array($CanValue[Name] => array("Value" => $result, "Name"=> $Value[Name], "Units" => $Value[Units], "Conversion" => $Value[Conversion], "RawHex" => $HexValue, "DateTime" => $array[0]));
+                    $entry = array($CanValue['Name'] => array("Value" => $result, "Name"=> $Value['Name'], "Units" => $Value['Units'], "Conversion" => $Value[Conversion], "RawHex" => $HexValue, "DateTime" => $array[0]));
                         if($ConvertedHex != 0){
                             $RunningArray = array_merge($RunningArray, $entry);
                         }
