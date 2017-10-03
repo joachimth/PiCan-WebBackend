@@ -1,16 +1,25 @@
 <?php
 error_reporting(0);
 
+//get the can array for the desired system
+require_once('includes/DeviceFunctions/CanIdLookup.php');
 
-require_once('includes/CanIdLookup.php');
+//convert strings into mathematical equasions
 require_once('includes/Field_calculate.php');
+
+//general includes for data manipulation
 require_once('includes/GeneralFunctions.include.php');
+
+//required for haltech
 require_once('includes/DeviceFunctions/Haltech.include.php');
 
-
+//instansiate the data holding array
 $RunningArray = array();
 $Tenth = null;
-$LogFile = "log.txt";
+
+//logfile to open.
+//todo: make it a CLI input for cron job.
+$LogFile = "LogFiles/log.txt";
 
 
 
@@ -25,7 +34,7 @@ $line = fgets($f);
 fclose($f);
 $line = explode(' ', $line);
 $line = explode('.', $line[0]);
-$OutputFile = date('YmdHis', $line[0]) . ".txt";
+$OutputFile = "Export/" . date('YmdHis', $line[0]) . ".txt";
 
 //create outputfile with the correct name, so we can append to it in the loop
 touch($OutputFile);
@@ -40,7 +49,6 @@ if ($handle) {
         $DateTime = explode('.', $line[0]);
         
         //Write to file every 1/10th of a second:
-        
         if(is_null($Tenth)){
             $Tenth = $DateTime[1][0];
         }
